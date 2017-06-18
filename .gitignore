@@ -1,8 +1,5 @@
-/bin/com/
-/bin/net/
-/bin/readme.txt
-/bin/
-/target/
+bin/
 target/
 target/classes
+target/classes/config.properties
 src/main/resources/config.properties
