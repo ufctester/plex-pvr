@@ -1,11 +1,14 @@
 package io.askcloud.plex.pvr;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.logging.Logger;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
 import net.filebot.Main;
 
@@ -23,8 +26,9 @@ public class Filebot {
 	
 	public static void main(String[] args) {
 		//Filebot.getInstance().filebotCreateNFO("C:\\tmp\\TVShows\\The Blacklist");
-		//Filebot.getInstance().filebotMissingTVShowEpisodes(HTPC.getPLEX_TVSHOWS_DIR());
-		Filebot.getInstance().filebotSeriesEnded("C:\\Plex\\SeriesSearch\\TVShows");
+		Filebot.getInstance().filebotMissingTVShowEpisodes(HTPC.getPLEX_TVSHOWS_DIR());
+		//Filebot.getInstance().filebotSeriesEnded("C:\\Plex\\SeriesSearch\\TVShows");
+		//Filebot.getInstance().filebotCreateNFOs();
 	}
 	
 	private Filebot() {
@@ -121,6 +125,20 @@ public class Filebot {
 		}
 		
 		LOG.exiting(CLASS_NAME, "createSeriesEnded");
+	}
+	
+	public void filebotCreateNFOs()
+	{
+		LOG.entering(CLASS_NAME, "filebotCreateNFOs");
+		
+		File directory = new File(HTPC.getPLEX_TVSHOWS_DIR());
+		File[] subdirs = directory.listFiles((FileFilter) DirectoryFileFilter.DIRECTORY);
+		for (File dir : subdirs) {
+			LOG.info("Creating NFO For: " + dir.toString());
+			filebotCreateNFO(dir.toString());
+		}
+		
+		LOG.exiting(CLASS_NAME, "filebotCreateNFOs");
 	}
 	
 	/**

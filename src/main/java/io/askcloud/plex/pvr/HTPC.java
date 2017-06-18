@@ -288,10 +288,6 @@ public class HTPC {
 		return getInstance().getOptions().getString("FILEBOT_SERIES_ENDED");
 	}	
 	
-	
-	
-	
-	
 	/**
 	 * @return
 	 */
