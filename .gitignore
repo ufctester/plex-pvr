@@ -4,5 +4,5 @@
 /bin/
 /target/
 target/
-target/classes/config.properties
+target/classes
 src/main/resources/config.properties
