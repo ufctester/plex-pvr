@@ -1,30 +1,11 @@
 package io.askcloud.plex.pvr;
 
-import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Filter;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
-import org.apache.commons.configuration2.Configuration;
-import org.apache.commons.configuration2.FileBasedConfiguration;
-import org.apache.commons.configuration2.PropertiesConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
-import org.apache.commons.io.FileUtils;
 
 import net.filebot.Main;
 
@@ -41,8 +22,9 @@ public class Filebot {
 	
 	
 	public static void main(String[] args) {
-		//Filebot.getInstance().createNFO("C:\\tmp\\TVShows\\The Blacklist");
-		//Filebot.getInstance().findMissingTVShowEpisodes(HTPC.getPLEX_TVSHOWS_DIR());
+		//Filebot.getInstance().filebotCreateNFO("C:\\tmp\\TVShows\\The Blacklist");
+		//Filebot.getInstance().filebotMissingTVShowEpisodes(HTPC.getPLEX_TVSHOWS_DIR());
+		Filebot.getInstance().filebotSeriesEnded("C:\\Plex\\SeriesSearch\\TVShows");
 	}
 	
 	private Filebot() {
@@ -120,11 +102,33 @@ public class Filebot {
 	}
 	
 	/**
+	 * C:\gitbash\opt\filebot\filebot.exe -script C:\\gitbash\\opt\\eclipse\\workspace\\plex-pvr\\scripts\\find-series-ended.groovy C:\tmp\TVShows --log info
+	 * @param directory
+	 */
+	public void filebotSeriesEnded(String directory) {
+		LOG.entering(CLASS_NAME, "createSeriesEnded", new Object[] {directory});
+		
+		try {		
+			Main.main(new String[] { "-script", HTPC.getFILEBOT_SERIES_ENDED(), directory, "--log", "info"});
+		}
+		catch(SecurityException e)
+		{
+			LOG.severe("Error getting missing episodes: " + e.getMessage());			
+			e.printStackTrace();
+		}
+		finally {
+			
+		}
+		
+		LOG.exiting(CLASS_NAME, "createSeriesEnded");
+	}
+	
+	/**
 	 * C:\gitbash\opt\filebot\filebot.exe -script C:\\gitbash\\opt\\eclipse\\workspace\\plex-pvr\\scripts\\create-nfo.groovy --def seriesDirectory="C:\tmp\TVShows" --log info
 	 * @param directory
 	 */
-	public void createNFO(String directory) {
-		LOG.entering(CLASS_NAME, "createNFO", new Object[] {directory});
+	public void filebotCreateNFO(String directory) {
+		LOG.entering(CLASS_NAME, "filebotCreateNFO", new Object[] {directory});
 		
 		try {		
 			Main.main(new String[] { "-script", HTPC.getFILEBOT_CREATE_SERIES_NFO(),"--def", "seriesDirectory=" + directory, "--log", "all"});
@@ -138,15 +142,15 @@ public class Filebot {
 			
 		}
 		
-		LOG.exiting(CLASS_NAME, "findMissingEpisodes");
+		LOG.exiting(CLASS_NAME, "filebotCreateNFO");
 	}
 	
 	/**
 	 * C:\gitbash\opt\filebot\filebot.exe -script C:\\gitbash\\opt\\eclipse\\workspace\\plex-pvr\\scripts\\find-series-episodes-missing.groovy C:\\Plex\\SeriesSearch\\TVShows --output C:\\gitbash\\opt\\eclipse\\workspace\\plex-pvr\\downloads\\download.json --log info
 	 * @param directory
 	 */
-	public void findMissingTVShowEpisodes(String directory) {
-		LOG.entering(CLASS_NAME, "findMissingTVShowEpisodes", new Object[] {directory});
+	public void filebotMissingTVShowEpisodes(String directory) {
+		LOG.entering(CLASS_NAME, "filebotMissingTVShowEpisodes", new Object[] {directory});
 		HTPC.getInstance().deleteQuietly(HTPC.getDOWNLOAD_QUEUE_FILE());
 		
 		try {		
@@ -167,7 +171,7 @@ public class Filebot {
 			
 		}
 		
-		LOG.exiting(CLASS_NAME, "findMissingEpisodes");
+		LOG.exiting(CLASS_NAME, "filebotMissingTVShowEpisodes");
 	}
 	
 //	/**

@@ -279,7 +279,16 @@ public class HTPC {
 	 */
 	public static String getFILEBOT_CREATE_SERIES_NFO() {
 		return getInstance().getOptions().getString("FILEBOT_CREATE_SERIES_NFO");
+	}
+	
+	/**
+	 * @return
+	 */
+	public static String getFILEBOT_SERIES_ENDED() {
+		return getInstance().getOptions().getString("FILEBOT_SERIES_ENDED");
 	}	
+	
+	
 	
 	
 	

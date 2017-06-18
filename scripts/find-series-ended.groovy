@@ -73,7 +73,7 @@ for( Map.Entry<String,Object> entry : showInfo.entrySet()){
 	} 
 	else
 	{
-		//missingEpisodes.append("\n" + data.seriesInfo.id + "," + "," + data.seriesInfo.name + ",false")
+		//log.info "\n" + data.seriesInfo.id + " - " + data.seriesInfo.name + " Ended=false"
 	}
 	              
 }
