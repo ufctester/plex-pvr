@@ -49,7 +49,7 @@ import org.jsoup.select.Elements;
  *   </tr>
  *   ... 
 */
-public class PlexPVR {
+public class PirateBayParser {
 
 	/**
 	 * Pirate Bay has 4 main colums in its table
