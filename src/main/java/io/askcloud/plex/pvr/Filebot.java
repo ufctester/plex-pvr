@@ -41,7 +41,8 @@ public class Filebot {
 	
 	
 	public static void main(String[] args) {
-		Filebot.getInstance().findMissingTVShowEpisodes(HTPC.getPLEX_TVSHOWS_DIR());
+		//Filebot.getInstance().createNFO("C:\\tmp\\TVShows\\The Blacklist");
+		//Filebot.getInstance().findMissingTVShowEpisodes(HTPC.getPLEX_TVSHOWS_DIR());
 	}
 	
 	private Filebot() {
@@ -117,35 +118,29 @@ public class Filebot {
 	public void findTVShowPlex(String name) {
 		//Main.main(new String[] { "-list", "--db", "thetvdb", "--q", "Dexter", "--format", "{plex}" });
 	}
-//	
-//	/**
-//	 * C:\gitbash\opt\filebot\filebot.exe -script C:\\gitbash\\opt\\eclipse\\workspace\\plex-pvr\\scripts\\create-nfo.groovy --def seriesDirectory="C:\tmp\TVShows" --log info
-//	 * @param directory
-//	 */
-//	public void createNFO(String directory) {
-//		LOG.entering(CLASS_NAME, "findMissingEpisodes", new Object[] {directory});
-//		deleteQuietly(HTPC.getDOWNLOAD_QUEUE_FILE());
-//		
-//		try {		
-//			
-//			//Main.main(new String[] { "-script", PlexPVRManager.FILE_BOT_FIND_MISSING_EPISODES, directory,"--output",PlexPVRManager.FILEBOT_SERIES_EPISODES_MISSING_FILE , "--def", "excludeList=" + FILE_BOT_FIND_MISSING_EPISODES_EXCLUDES,"--log", "all"});
-//			//callFileBot(new String[] { "-script", PlexPVRManager.FILE_BOT_FIND_MISSING_EPISODES, directory,"--output",PlexPVRManager.FILEBOT_SERIES_EPISODES_MISSING_FILE , "--def", "excludeList=" + FILE_BOT_FIND_MISSING_EPISODES_EXCLUDES,"--log", "info"});
-//			//Main.main(new String[] { "-list", "--db", "thetvdb", "--q", "Dexter", "--format", "{plex}" });
-//			directory="\"" + directory + "\"";
-//			callFileBot(new String[] { "-script", HTPC.getFILEBOT_FIND_SERIES_MISSING_EPISODES(), directory,"--output",HTPC.getDOWNLOAD_QUEUE_FILE() , "--def", "excludeList=" + getFILEBOT_FIND_SERIES_EPISODES_MISSING_EXCLUDES(),"--log", "info"});
-//		}
-//		catch(SecurityException e)
-//		{
-//			LOG.severe("Error getting missing episodes: " + e.getMessage());			
-//			e.printStackTrace();
-//		}
-//		finally {
-//			
-//		}
-//		
-//		LOG.exiting(CLASS_NAME, "findMissingEpisodes");
-//	}
-//	
+	
+	/**
+	 * C:\gitbash\opt\filebot\filebot.exe -script C:\\gitbash\\opt\\eclipse\\workspace\\plex-pvr\\scripts\\create-nfo.groovy --def seriesDirectory="C:\tmp\TVShows" --log info
+	 * @param directory
+	 */
+	public void createNFO(String directory) {
+		LOG.entering(CLASS_NAME, "createNFO", new Object[] {directory});
+		
+		try {		
+			Main.main(new String[] { "-script", HTPC.getFILEBOT_CREATE_SERIES_NFO(),"--def", "seriesDirectory=" + directory, "--log", "all"});
+		}
+		catch(SecurityException e)
+		{
+			LOG.severe("Error getting missing episodes: " + e.getMessage());			
+			e.printStackTrace();
+		}
+		finally {
+			
+		}
+		
+		LOG.exiting(CLASS_NAME, "findMissingEpisodes");
+	}
+	
 	/**
 	 * C:\gitbash\opt\filebot\filebot.exe -script C:\\gitbash\\opt\\eclipse\\workspace\\plex-pvr\\scripts\\find-series-episodes-missing.groovy C:\\Plex\\SeriesSearch\\TVShows --output C:\\gitbash\\opt\\eclipse\\workspace\\plex-pvr\\downloads\\download.json --log info
 	 * @param directory

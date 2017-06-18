@@ -277,6 +277,15 @@ public class HTPC {
 	/**
 	 * @return
 	 */
+	public static String getFILEBOT_CREATE_SERIES_NFO() {
+		return getInstance().getOptions().getString("FILEBOT_CREATE_SERIES_NFO");
+	}	
+	
+	
+	
+	/**
+	 * @return
+	 */
 	public List<Torrent> loadDownloads()
 	{
 		LOG.entering(CLASS_NAME, "loadDownloads");

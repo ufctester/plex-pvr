@@ -2,5 +2,7 @@
 /bin/net/
 /bin/readme.txt
 /bin/
-
+/target/
+target/
+target/classes/config.properties
 src/main/resources/config.properties
